@@ -15,6 +15,9 @@ return {
 
     -- Schema Information
     "b0o/SchemaStore.nvim",
+
+    -- Tailwind Colors
+    "princejoogie/tailwind-highlight.nvim",
   },
   config = function()
     require("neodev").setup()
@@ -32,6 +35,8 @@ return {
     end
 
     local lspconfig = require("lspconfig")
+
+    local tw_highlights = require("tailwind-highlight")
 
     local servers = {
       bashls = true,
@@ -102,6 +107,19 @@ return {
       config = vim.tbl_deep_extend("force", {}, {
         capabilities = capabilities,
       }, config)
+
+      if name == "tailwindcss" then
+        config = vim.tbl_deep_extend("force", {}, {
+          on_attach = function(client, bufnr)
+            tw_highlights.setup(client, bufnr, {
+              single_column = false,
+              mode = "background",
+              debounce = 200,
+            })
+          end,
+          capabilities = capabilities,
+        }, config)
+      end
 
       lspconfig[name].setup(config)
     end
