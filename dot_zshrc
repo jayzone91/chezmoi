@@ -3,6 +3,22 @@ if [[ -f "/opt/homebrew/bin/brew" ]] then
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
+# install and initialize Plugin Manager
+# set the directory we want to store zinit and plugins
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+
+# Download zinit, if it´s not there yet
+if [ ! -d "$ZINIT_HOME" ]; then
+  mkdir -p "$(dirname $ZINIT_HOME)"
+  git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+fi
+
+# source zinit
+source "${ZINIT_HOME}/zinit.zsh"
+
+# add in powerlevel10k
+zinit ice depth=1; zinit light romkatv/powerlevel10k
+
 # init fzf
 eval "$(fzf --zsh)"
 
