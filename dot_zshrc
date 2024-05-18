@@ -27,6 +27,14 @@ source "${ZINIT_HOME}/zinit.zsh"
 # add in powerlevel10k
 zinit ice depth=1; zinit light romkatv/powerlevel10k
 
+# add in zsh plugins
+zinit light zsh-users/zsh-syntax-highlighting
+zinit light zsh-users/zsh-completions
+zinit light zsh-users/zsh-autosuggestions
+
+# Autoload completions
+autoload -U compinit && compinit
+
 # init fzf
 eval "$(fzf --zsh)"
 
@@ -47,3 +55,46 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# Custom Keybinds
+bindkey "^f" autosuggest-accept # CTRL + f 
+bindkey "^[[A" history-search-backward # Arrow Up
+bindkey "^[[B" history-search-forward # Arrow Down
+
+# History
+HISTSIZE=1000
+HISTFILE=~/.zsh_history
+SAVEHIST=$HISTSIZE
+HISTDUP=erase
+setopt appendhistory
+setopt sharehistory
+setopt hist_ignore_space
+setopt hist_ignore_all_dups
+setopt hist_save_no_dups
+setopt hist_ignore_dups
+setopt hist_find_no_dups
+
+# Completion styling
+zstyle ":completion:*" matcher-list "m:{a-z}={A-Za-z}"
+zstyle ":completion:*" list-colors "${(s.:.)LS_COLOR}"
+
+
+# Aliases
+alias ls="eza --icons=always"
+alias l="eza --icons=always"
+alias la="eza -a --icons=always"
+alias ll="eza --color=always --long --git --no-filesize --icons=always --no-time --no-user --no-permissions"
+alias lla="eza -a --color=always --long --git --no-filesize --icons=always --no-time --no-user --no-permissions"
+
+alias c="clear"
+
+alias vim="nvim"
+alias v="nvim"
+
+alias cd="z"
+alias ..="z .."
+
+alias ed="chezmoi edit ~/.zshrc"
+alias ref="chezmoi apply -v && source ~/.zshrc"
+alias config="chezmoi"
+alias config-apply="chezmoi apply -v"
