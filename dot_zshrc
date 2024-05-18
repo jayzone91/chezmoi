@@ -6,12 +6,17 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+# Shell integrations
+# init fzf
+eval "$(fzf --zsh)"
+# init zoxide
+eval "$(zoxide init --hook prompt zsh)"
+
 if [[ -f "/opt/homebrew/bin/brew" ]] then
   # If you're using macOS, you'll want this enabled
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
-# install and initialize Plugin Manager
 # set the directory we want to store zinit and plugins
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 
@@ -31,15 +36,17 @@ zinit ice depth=1; zinit light romkatv/powerlevel10k
 zinit light zsh-users/zsh-syntax-highlighting
 zinit light zsh-users/zsh-completions
 zinit light zsh-users/zsh-autosuggestions
+zinit light Aloxaf/fzf-tab
+
+# Add snippets
+zinit snippet OMZP::git
+zinit snippet OMZP::sudo
 
 # Autoload completions
-autoload -U compinit && compinit
+autoload -Uz compinit && compinit
 
-# init fzf
-eval "$(fzf --zsh)"
-
-# init zoxide
-eval "$(zoxide init zsh)"
+# make all OMZ Plugins available
+zinit cdreplay -q
 
 # nvm
 export NVM_DIR="$HOME/.nvm"
@@ -76,13 +83,16 @@ setopt hist_find_no_dups
 
 # Completion styling
 zstyle ":completion:*" matcher-list "m:{a-z}={A-Za-z}"
-zstyle ":completion:*" list-colors "${(s.:.)LS_COLOR}"
+zstyle ":completion:*" list-colors "${(s.:.)LS_COLORS}"
+zstyle ":completion:*" menu no
+zstyle ":fzf-tab:complete:cd:*" fzf-preview "eza -1 --color=always $realpath"
+zstyle ":fzf-tab:complete:__zoxide_z:*" fzf-preview "eza -1 --color=always $realpath"
 
 
 # Aliases
-alias ls="eza --icons=always"
-alias l="eza --icons=always"
-alias la="eza -a --icons=always"
+alias ls="eza --icons=always --color=always"
+alias l="eza --icons=always --color=always"
+alias la="eza -a --icons=always --color=always"
 alias ll="eza --color=always --long --git --no-filesize --icons=always --no-time --no-user --no-permissions"
 alias lla="eza -a --color=always --long --git --no-filesize --icons=always --no-time --no-user --no-permissions"
 
@@ -96,5 +106,8 @@ alias ..="z .."
 
 alias ed="chezmoi edit ~/.zshrc"
 alias ref="chezmoi apply -v && source ~/.zshrc"
+alias vim_ed="chezmoi edit ~/.config/nvim"
 alias config="chezmoi"
 alias config-apply="chezmoi apply -v"
+alias source-tmux="chezmoi apply -v && tmux source ~/.tmux.conf"
+
