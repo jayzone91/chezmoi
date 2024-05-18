@@ -73,6 +73,7 @@ alias v=nvim
 alias cd="z"
 alias dl="yt-dlp --no-playlist -q --newline --progress -P ~/Downloads/"
 alias c=clear
+alias ..="z .."
 
 # bun completions
 [ -s "/Users/jay/.bun/_bun" ] && source "/Users/jay/.bun/_bun"
