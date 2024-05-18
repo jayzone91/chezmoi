@@ -54,6 +54,7 @@ return {
       pyright = true,
       prismals = true,
       taplo = true,
+      astro = true,
     }
 
     local servers_to_install = vim.tbl_filter(function(key)
@@ -88,6 +89,10 @@ return {
     vim.list_extend(ensure_installed, servers_to_install)
     require("mason-tool-installer").setup({
       ensure_installed = ensure_installed,
+      auto_update = true,
+      run_on_start = true,
+      start_delay = 3000, -- 3 seconds delay
+      debounce_hours = 5, -- at least 5 hours between attempts to install/update
     })
 
     for name, config in pairs(servers) do
