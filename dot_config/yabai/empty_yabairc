@@ -28,6 +28,8 @@ yabai -m config mouse_action2 resize
 # when window is dropped in center of another window, swap them (on edges it will split it)
 yabai -m mouse_drop_action swap
 
+# to check which App to disable and getting the app name, use yabai -m query --windows
+
 # disable specific apps
 yabai -m rule --add app="^System Settings$" manage=off
 yabai -m rule --add app="^Calculator$" manage=off
@@ -38,3 +40,6 @@ yabai -m rule --add app="^AnyDesk$" manage=off
 yabai -m rule --add app="^System­einstellungen$" manage=off
 yabai -m rule --add app="^Rechner$" manage=off
 yabai -m rule --add app="^Musik$" manage=off
+yabai -m rule --add app="Fixppo" manage=off # geht nicht!!!
+yabai -m rule --add app="^GitHub" manage=off
+yabai -m rule --add app="^Notizzettel$" manage=off # geht auch nicht!
