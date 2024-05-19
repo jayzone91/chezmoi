@@ -68,7 +68,7 @@ cmp.setup({
       maxwidth = 50,
       ellipsis_char = "...",
       show_labelDetails = true,
-      before = function(_, vim_item) return vim_item end,
+      before = require("tailwind-tools.cmp").lspkind_format,
     }),
   },
 })
