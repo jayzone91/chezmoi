@@ -111,3 +111,4 @@ alias config="chezmoi"
 alias config-apply="chezmoi apply -v"
 alias source-tmux="chezmoi apply -v && tmux source ~/.tmux.conf"
 
+
