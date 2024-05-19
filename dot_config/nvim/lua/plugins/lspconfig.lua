@@ -118,6 +118,15 @@ return {
           "must have valid client"
         )
 
+        if client.name == "tailwindcss" then
+          vim.keymap.set(
+            "n",
+            "<leader>tf",
+            "<cmd>TailwindSort<CR>",
+            { buffer = 0, desc = "Sort Tailwind Classes" }
+          )
+        end
+
         vim.opt_local.omnifunc = "v:lua.vim.lsp.omnifunc"
         vim.keymap.set(
           "n",
