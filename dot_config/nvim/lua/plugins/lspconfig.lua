@@ -16,6 +16,11 @@ return {
     -- Schema Information
     "b0o/SchemaStore.nvim",
   },
+  ots = {
+    inlay_hints = {
+      enable = true,
+    },
+  },
   config = function()
     require("neodev").setup()
 
@@ -36,10 +41,54 @@ return {
     local servers = {
       bashls = true,
       gopls = true,
-      lua_ls = true,
       rust_analyzer = true,
       cssls = true,
-      tsserver = true,
+      tsserver = {
+        javascript = {
+          inlayHints = {
+            includeInlayEnumMemberValueHints = true,
+            includeInlayFunctionLikeReturnTypeHints = true,
+            includeInlayFunctionParameterTypeHints = true,
+            includeInlayParameterNameHints = "all",
+            includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+            includeInlayPropertyDeclarationTypeHints = true,
+            includeInlayVariableTypeHints = true,
+          },
+        },
+        javascriptreact = {
+          inlayHints = {
+            includeInlayEnumMemberValueHints = true,
+            includeInlayFunctionLikeReturnTypeHints = true,
+            includeInlayFunctionParameterTypeHints = true,
+            includeInlayParameterNameHints = "all",
+            includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+            includeInlayPropertyDeclarationTypeHints = true,
+            includeInlayVariableTypeHints = true,
+          },
+        },
+        typescript = {
+          inlayHints = {
+            includeInlayEnumMemberValueHints = true,
+            includeInlayFunctionLikeReturnTypeHints = true,
+            includeInlayFunctionParameterTypeHints = true,
+            includeInlayParameterNameHints = "all",
+            includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+            includeInlayPropertyDeclarationTypeHints = true,
+            includeInlayVariableTypeHints = true,
+          },
+        },
+        typescriptreact = {
+          inlayHints = {
+            includeInlayEnumMemberValueHints = true,
+            includeInlayFunctionLikeReturnTypeHints = true,
+            includeInlayFunctionParameterTypeHints = true,
+            includeInlayParameterNameHints = "all",
+            includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+            includeInlayPropertyDeclarationTypeHints = true,
+            includeInlayVariableTypeHints = true,
+          },
+        },
+      },
       jsonls = {
         settings = {
           json = {
@@ -55,6 +104,17 @@ return {
       prismals = true,
       taplo = true,
       astro = true,
+      lua_ls = {
+        Lua = {
+          workspace = {
+            checkThirdParty = false,
+          },
+          telemetry = {
+            enable = false,
+          },
+          hint = { enable = true },
+        },
+      },
     }
 
     local servers_to_install = vim.tbl_filter(function(key)
@@ -80,7 +140,6 @@ return {
       "prettierd", -- Almost everything Formatter
       "black", -- python formatter
       "isort", -- python formatter
-      "lua_ls",
       -- Linter
       "pylint",
       "eslint_d",
@@ -125,6 +184,12 @@ return {
             "<cmd>TailwindSort<CR>",
             { buffer = 0, desc = "Sort Tailwind Classes" }
           )
+        end
+
+        if client.server_capabilities.inlayHintProvider then
+          vim.lsp.inlay_hint.enable(true)
+        else
+          vim.lsp.inlay_hint.enable(false)
         end
 
         vim.opt_local.omnifunc = "v:lua.vim.lsp.omnifunc"
