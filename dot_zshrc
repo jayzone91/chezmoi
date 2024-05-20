@@ -64,7 +64,7 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # Custom Keybinds
-bindkey "^f" autosuggest-accept # CTRL + f 
+bindkey "^f" autosuggest-accept # CTRL + f
 bindkey "^[[A" history-search-backward # Arrow Up
 bindkey "^[[B" history-search-forward # Arrow Down
 
@@ -111,4 +111,9 @@ alias config="chezmoi"
 alias config-apply="chezmoi apply -v"
 alias source-tmux="chezmoi apply -v && tmux source ~/.tmux.conf"
 
+# set new ruby path. macos integrated ruby version is too old.
+export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
 
+# set variables, that compilers can find ruby
+export LDFLAGS="-L/opt/homebrew/opt/ruby/lib"
+export CPPFLAGS="-I/opt/homebrew/opt/ruby/include"
