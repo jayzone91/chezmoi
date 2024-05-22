@@ -31,7 +31,7 @@ return {
     vim.keymap.set(
       "n",
       "<leader>d",
-      require("oil").toggle_float,
+      "<CMD>Oil<CR>",
       { desc = "Open Directory in Oil" }
     )
   end,
