@@ -4,15 +4,20 @@ return {
     lazy = true,
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
-      "JoosepAlviste/nvim-ts-context-commentstring",
+      {
+        "folke/ts-comments.nvim",
+        opts = {
+          lang = {
+            python = "# %s",
+          },
+        },
+        event = "VeryLazy",
+        enabled = vim.fn.has("nvim-0.10.0") == 1,
+      },
     },
     config = function()
       ---@diagnostic disable-next-line:missing-fields
-      require("Comment").setup({
-        pre_hook = require(
-          "ts_context_commentstring.integrations.comment_nvim"
-        ).create_pre_hook(),
-      })
+      require("Comment").setup({})
     end,
   },
   {
