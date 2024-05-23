@@ -43,6 +43,8 @@ return {
       gopls = true,
       rust_analyzer = true,
       cssls = true,
+      phpactor = true,
+      intelephense = true,
       tsserver = {
         javascript = {
           inlayHints = {
@@ -140,6 +142,7 @@ return {
       "prettierd", -- Almost everything Formatter
       "black", -- python formatter
       "isort", -- python formatter
+      "php-cs-fixer", -- PHP Formatter
       -- Linter
       "pylint",
       "eslint_d",
@@ -251,6 +254,7 @@ return {
         scss = { "prettierd" },
         markdown = { "prettierd" },
         python = { "isort", "black" },
+        php = { "php-cs-fixer" },
       },
     })
 

@@ -1,6 +1,4 @@
-import = [
-"~/.config/alacritty/themes/themes/rose-pine-moon.toml"
-]
+import = ["~/.config/alacritty/themes/themes/rose-pine-moon.toml"]
 
 [env]
 TERM = "xterm-256color"
@@ -18,3 +16,7 @@ blur = true
 normal.family = "MesloLGS NF"
 
 size = 18
+
+[cursor]
+style.shape = "Beam"
+style.blinking = "On"
