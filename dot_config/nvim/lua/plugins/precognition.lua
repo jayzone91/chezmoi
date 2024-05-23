@@ -1,4 +1,10 @@
 return {
   "tris203/precognition.nvim",
-  config = function() require("precognition").toggle() end,
+  config = function()
+    vim.keymap.set(
+      "n",
+      "<leader>tp",
+      function() require("precognition").toggle() end
+    )
+  end,
 }
