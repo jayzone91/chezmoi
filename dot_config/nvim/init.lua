@@ -1,13 +1,12 @@
 vim.g.mapleader = " "
-vim.g.maplocalleader = " "
 
 require("options")
-require("autocmds")
+require("mappings")
 
--- install Lazy Plugin Manager
--- https://github.com/folke/lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
+  -- bootstrap lazy.nvim
   vim.fn.system({
     "git",
     "clone",
@@ -17,22 +16,20 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
     lazypath,
   })
 end
+
+-- Add lazy to the "runtimepath", this allows us to require it.
 vim.opt.rtp:prepend(lazypath)
 
+-- Set up lazy and load my "/lua/plugins" folder.
 require("lazy").setup({
-  { import = "plugins" },
-}, {
+  spec = {
+    { import = "plugins" },
+  },
   defaults = {
     lazy = false,
     version = false,
   },
-  install = {
-    missing = true,
-  },
-  checker = {
-    enabled = true,
-    notify = false,
-  },
+  checker = { enabled = true },
   change_detection = {
     notify = false,
   },
@@ -49,6 +46,4 @@ require("lazy").setup({
   },
 })
 
-require("mappings")
-
-vim.lsp.set_log_level("debug")
+require("autocmds")

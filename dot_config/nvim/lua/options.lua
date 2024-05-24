@@ -1,10 +1,16 @@
--- Vim / NeoVim Options.
--- https://neovim.io/doc/user/quickref.html#option-list
-
 vim.cmd("let g:netrw_liststyle = 3")
 
 local o = vim.o
 
+o.inccommand = "split"
+o.signcolumn = "yes"
+
+vim.opt.shada = { "'10", "<0", "s10", "h" }
+vim.opt.formatoptions:remove("o")
+o.grepformat = "%f:%l:%c:%m"
+o.grepprg = "rg --vimgrep"
+o.pumblend = 10
+o.pumheight = 10
 o.autoindent = true -- take indent for new line from previous line
 o.autoread = true -- autom. read file when changed outside of Vim
 o.background = "dark" -- "dark" or "light", used for highlight colors
@@ -26,11 +32,8 @@ o.updatetime = 250
 o.timeoutlen = 300
 o.splitright = true
 o.splitbelow = true
-o.list = true
-vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
-vim.opt.inccommand = "split"
-o.cursorline = true
 o.scrolloff = 10
+o.cursorline = true
 o.smartindent = true -- smart autoindent for C programs
 o.smarttab = true -- use "shiftwidth" when inserting <Tab>
 o.softtabstop = 2 -- number of spaces that <Tab> uses while editing

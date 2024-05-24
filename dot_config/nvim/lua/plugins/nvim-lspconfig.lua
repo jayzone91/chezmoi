@@ -2,26 +2,44 @@ return {
   "neovim/nvim-lspconfig",
   dependencies = {
     "folke/neodev.nvim",
+    { "folke/neoconf.nvim", cmd = "Neoconf", config = false },
     "williamboman/mason.nvim",
     "williamboman/mason-lspconfig.nvim",
     "WhoIsSethDaniel/mason-tool-installer.nvim",
 
-    { "antosha417/nvim-lsp-file-operations", config = true },
+    {
+      "antosha417/nvim-lsp-file-operations",
+      config = true,
+      dependencies = {
+        "nvim-lua/plenary.nvim",
+      },
+    },
 
+    -- fancy LSP Loading indicator
     { "j-hui/fidget.nvim", opts = {} },
 
     -- Autoformatting
     "stevearc/conform.nvim",
 
-    -- Schema Information
+    -- Schema information
     "b0o/SchemaStore.nvim",
   },
-  ots = {
-    inlay_hints = {
-      enable = true,
+  opts = {
+    diagnostics = {
+      underline = true,
+      update_in_insert = false,
+      virtual_text = {
+        spacing = 4,
+        source = "if_many",
+        prefix = "●",
+      },
+      severity_sort = true,
     },
+    inlay_hints = { enabled = true },
+    codelens = { enabled = true },
+    document_highlight = { enabled = true },
   },
-  config = function()
+  config = function(_, opts)
     require("neodev").setup()
 
     local capabilities = nil
@@ -38,86 +56,11 @@ return {
 
     local lspconfig = require("lspconfig")
 
-    local servers = {
-      bashls = true,
-      gopls = true,
-      rust_analyzer = true,
-      cssls = true,
-      phpactor = true,
-      intelephense = true,
-      tsserver = {
-        javascript = {
-          inlayHints = {
-            includeInlayEnumMemberValueHints = true,
-            includeInlayFunctionLikeReturnTypeHints = true,
-            includeInlayFunctionParameterTypeHints = true,
-            includeInlayParameterNameHints = "all",
-            includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-            includeInlayPropertyDeclarationTypeHints = true,
-            includeInlayVariableTypeHints = true,
-          },
-        },
-        javascriptreact = {
-          inlayHints = {
-            includeInlayEnumMemberValueHints = true,
-            includeInlayFunctionLikeReturnTypeHints = true,
-            includeInlayFunctionParameterTypeHints = true,
-            includeInlayParameterNameHints = "all",
-            includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-            includeInlayPropertyDeclarationTypeHints = true,
-            includeInlayVariableTypeHints = true,
-          },
-        },
-        typescript = {
-          inlayHints = {
-            includeInlayEnumMemberValueHints = true,
-            includeInlayFunctionLikeReturnTypeHints = true,
-            includeInlayFunctionParameterTypeHints = true,
-            includeInlayParameterNameHints = "all",
-            includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-            includeInlayPropertyDeclarationTypeHints = true,
-            includeInlayVariableTypeHints = true,
-          },
-        },
-        typescriptreact = {
-          inlayHints = {
-            includeInlayEnumMemberValueHints = true,
-            includeInlayFunctionLikeReturnTypeHints = true,
-            includeInlayFunctionParameterTypeHints = true,
-            includeInlayParameterNameHints = "all",
-            includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-            includeInlayPropertyDeclarationTypeHints = true,
-            includeInlayVariableTypeHints = true,
-          },
-        },
-      },
-      jsonls = {
-        settings = {
-          json = {
-            schema = require("schemastore").json.schemas(),
-            validate = { enable = true },
-          },
-        },
-      },
-      tailwindcss = true,
-      html = true,
-      marksman = true,
-      pyright = true,
-      prismals = true,
-      taplo = true,
-      astro = true,
-      lua_ls = {
-        Lua = {
-          workspace = {
-            checkThirdParty = false,
-          },
-          telemetry = {
-            enable = false,
-          },
-          hint = { enable = true },
-        },
-      },
-    }
+    vim.diagnostic.config(vim.deepcopy(opts.diagnostic))
+
+    local servers = require("config.lsp-servers").servers
+    local formatter = require("config.formatters").formatters
+    local linter = require("config.linter").linter
 
     local servers_to_install = vim.tbl_filter(function(key)
       local t = servers[key]
@@ -137,24 +80,19 @@ return {
         },
       },
     })
-    local ensure_installed = {
-      "stylua", -- Lua Formatter
-      "prettierd", -- Almost everything Formatter
-      "black", -- python formatter
-      "isort", -- python formatter
-      "php-cs-fixer", -- PHP Formatter
-      -- Linter
-      "pylint",
-      "eslint_d",
-    }
+
+    local ensure_installed = {}
 
     vim.list_extend(ensure_installed, servers_to_install)
+    vim.list_extend(ensure_installed, formatter)
+    vim.list_extend(ensure_installed, linter)
+
     require("mason-tool-installer").setup({
       ensure_installed = ensure_installed,
       auto_update = true,
       run_on_start = true,
-      start_delay = 3000, -- 3 seconds delay
-      debounce_hours = 5, -- at least 5 hours between attempts to install/update
+      start_delay = 3000, -- 3 second delay
+      -- debounce_hours = 5, -- at least 5 hours between attemps to install/update
     })
 
     for name, config in pairs(servers) do
@@ -171,7 +109,6 @@ return {
     local disable_semantic_tokens = {
       lua = true,
     }
-
     vim.api.nvim_create_autocmd("LspAttach", {
       callback = function(args)
         local bufnr = args.buf

@@ -1,4 +1,4 @@
-local treesitter = require("nvim-treesitter.configs")
+local treesitter = require("nvim-treesitter.config")
 require("nvim-treesitter.install").prefer_git = true
 
 ---@diagnostic disable-next-line:missing-fields

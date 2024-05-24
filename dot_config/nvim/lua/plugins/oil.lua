@@ -5,7 +5,10 @@ return {
   },
   config = function()
     require("oil").setup({
-      columns = { "icons" },
+      columns = { "icon" },
+      view_options = {
+        show_hidden = true,
+      },
       keymaps = {
         ["g?"] = "actions.show_help",
         ["<CR>"] = "actions.select",
@@ -23,9 +26,6 @@ return {
         ["gx"] = "actions.open_external",
         ["g."] = "actions.toggle_hidden",
         ["g\\"] = "actions.toggle_trash",
-      },
-      view_options = {
-        show_hidden = true,
       },
     })
     vim.keymap.set(

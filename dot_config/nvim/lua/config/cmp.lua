@@ -1,5 +1,6 @@
 vim.opt.completeopt = { "menu", "menuone", "noselect" }
 vim.opt.shortmess:append("c")
+vim.api.nvim_set_hl(0, "CmpGhostText", { link = "Comment", default = true })
 
 local cmp = require("cmp")
 local lspkind = require("lspkind")
@@ -17,6 +18,11 @@ cmp.setup({
     { name = "luasnip" },
     { name = "buffer" },
     { name = "path" },
+  },
+  experimental = {
+    ghost_text = {
+      hl_group = "CmpGhostText",
+    },
   },
   completion = { completeopt = "menu,menuone,noinsert" },
   mapping = cmp.mapping.preset.insert({

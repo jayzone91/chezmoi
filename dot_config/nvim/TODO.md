@@ -1,1 +1,0 @@
-- [ ] TS Autotag had breaking changes. Check config!
