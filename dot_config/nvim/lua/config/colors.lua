@@ -43,6 +43,14 @@ require("catppuccin").setup({
       indentscope_color = "",
     },
     -- For more plugins integrations: (https://github.com/catppuccin/nvim#integrations)
+    aerial = true,
+    harpoon = true,
+    indent_blankline = true,
+    mason = true,
+    neotree = true,
+    neotest = true,
+    noice = true,
+    which_key = true,
   },
 })
 

@@ -19,7 +19,6 @@ telescope.setup({
 })
 
 pcall(require("telescope").load_extension, "fzf")
-pcall(require("telescope").load_extension, "smart_history")
 pcall(require("telescope").load_extension, "aerial")
 
 local builtin = require("telescope.builtin")
@@ -28,7 +27,6 @@ local builtin = require("telescope.builtin")
 local map = function(mode, key, func, desc)
   vim.keymap.set(mode, key, func, { desc = desc })
 end
-
 map("n", "<leader>ff", builtin.find_files, "Find Files")
 map("n", "<leader><space>", builtin.buffers, "Search open Buffers")
 map("n", "<leader>fr", builtin.oldfiles, "Find recent Files")
@@ -58,18 +56,4 @@ map(
   "Fuzzy Search in Current Buffer"
 )
 map("n", "<leader>fg", builtin.live_grep, "Live Grep")
-map(
-  "n",
-  "<leader>fc",
-  function() builtin.find_files({ cwd = vim.fn.stdpath("config") }) end,
-  "Search Config"
-)
-map(
-  "n",
-  "<leader>fa",
-  function()
-    builtin.find_files({ cwd = vim.fs.joinpath(vim.fn.stdpath("data"), "lazy") })
-  end,
-  "Find ... Lazy"
-)
 map("n", "<leader>ss", "<cmd>Telescope aerial<CR>", "Goto Symbol (Aerial)")

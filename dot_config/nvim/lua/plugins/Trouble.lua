@@ -47,4 +47,5 @@ return {
       desc = "Previous Trouble/Quickfix Item",
     },
   },
+  opts = {},
 }
