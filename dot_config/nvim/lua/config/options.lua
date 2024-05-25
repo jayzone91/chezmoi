@@ -19,3 +19,5 @@ opt.backspace = "indent,eol,start" -- how backspace works at start of line
 opt.copyindent = true -- make "autoindent" use existing indent structure
 opt.hlsearch = true -- highlight matches with last search
 opt.swapfile = false -- whether to use a swapfile for a buffer
+opt.foldlevelstart = -1 -- 'foldlevel' when starting to edit a file
+opt.foldmethod = "manual" -- folding type
