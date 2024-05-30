@@ -1,6 +1,17 @@
+-- [[
+-- oil.nvim
+-- Neovim file explorer: edit your filesystem like a buffer
+-- https://github.com/stevearc/oil.nvim
+-- ]]
 return {
   "stevearc/oil.nvim",
+  lazy = false,
   dependencies = {
+    -- [[
+    -- nvim-web-devicons
+    -- lua `fork` of vim-web-devicons for neovim
+    -- https://github.com/nvim-tree/nvim-web-devicons
+    -- ]]
     "nvim-tree/nvim-web-devicons",
   },
   config = function()
@@ -10,24 +21,17 @@ return {
         show_hidden = true,
       },
       keymaps = {
-        ["g?"] = "actions.show_help",
-        ["<CR>"] = "actions.select",
-        ["<C-s>"] = "actions.select_vsplit",
-        ["<C-h>"] = "actions.select_split",
-        ["<C-t>"] = "actions.select_tab",
-        ["<C-p>"] = "actions.preview",
-        ["<Esc>"] = "actions.close",
-        ["<C-l>"] = "actions.refresh",
-        ["-"] = "actions.parent",
-        ["_"] = "actions.open_cwd",
-        ["`"] = "actions.cd",
-        ["~"] = "actions.tcd",
-        ["gs"] = "actions.change_sort",
-        ["gx"] = "actions.open_external",
-        ["g."] = "actions.toggle_hidden",
-        ["g\\"] = "actions.toggle_trash",
+        ["q"] = "actions.close",
+        ["<ESC>"] = "actions.close",
+        ["<BS>"] = "actions.parent",
       },
     })
-    vim.keymap.set("n", "<leader>d", "<CMD>Oil<CR>", { desc = "Open Directory in Oil" })
+
+    vim.keymap.set(
+      "n",
+      "<leader>d",
+      "<CMD>Oil --float<CR>",
+      { desc = "Open parent dir in Oil" }
+    )
   end,
 }
