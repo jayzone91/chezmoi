@@ -33,7 +33,7 @@ local config = wezterm.config_builder()
 -- Disable automatic Updates because we will update wezterm with homebrew
 config.check_for_updates = false
 
--- Stupid Wezterm Defaults...
+-- Stupid Wezterm MacOs Defaults...
 config.send_composed_key_when_left_alt_is_pressed = true
 
 config.exit_behavior = "CloseOnCleanExit"
