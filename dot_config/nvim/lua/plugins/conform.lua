@@ -38,6 +38,7 @@ return {
           bufnr = args.buf,
           lsp_fallback = true,
           quiet = true,
+          async = false,
         })
       end,
     })

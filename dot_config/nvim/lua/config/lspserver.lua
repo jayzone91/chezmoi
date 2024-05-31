@@ -68,7 +68,6 @@ local server = {
   marksman = true,
   prismals = true,
   pyright = true,
-  snyk_ls = true,
   sqls = true,
   tailwindcss = true,
   taplo = true,

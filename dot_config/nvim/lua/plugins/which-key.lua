@@ -33,6 +33,9 @@ return {
       x = {
         name = "+Trouble",
       },
+      t = {
+        name = "+Tabs",
+      },
     }, { prefix = "<leader>" })
   end,
 }

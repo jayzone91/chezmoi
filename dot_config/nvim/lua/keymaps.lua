@@ -78,8 +78,21 @@ map({ "i", "n" }, "<esc>", "<cmd>noh<cr><esc>")
 map("n", "<leader>qq", "<cmd>qa<cr>", { desc = "Quit Neovim" })
 
 -- split Window
-map("n", "<leader>ss", "<cmd>vsplit<cr>", { desc = "Split Screen horizontal" })
-map("n", "<leader>sv", "<cmd>split<cr>", { desc = "Split Screen vertical" })
+map("n", "<leader>ss", "<C-w>s", { desc = "Split Screen horizontal" })
+map("n", "<leader>sv", "<C-w>v", { desc = "Split Screen vertical" })
+map("n", "<leader>se", "<C-w>=", { desc = "Make Split equal size" })
+
+-- tabs
+map("n", "<leader>to", "<cmd>tabnew<CR>", { desc = "Open new Tab" })
+map("n", "<leader>tx", "<cmd>tabclose<CR>", { desc = "Close current Tab" })
+map("n", "<Tab>", "<cmd>tabn<CR>", { desc = "Go to next Tab" })
+map("n", "<S-Tab>", "<cmd>tabp<CR>", { desc = "Go to prev Tab" })
+map(
+  "n",
+  "<leader>tf",
+  "<cmd>tabnew %<CR>",
+  { desc = "Open current Buffer in new tab" }
+)
 
 -- Easy way to leave terminal mode
 map("t", "<esc>", "<C-\\>>C.N>")
