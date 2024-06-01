@@ -6,13 +6,14 @@
 
 return {
   "akinsho/bufferline.nvim",
-  lazy = false,
+  event = "ColorScheme",
   version = "*",
   dependencies = {
     "nvim-tree/nvim-web-devicons",
   },
   config = function()
     require("bufferline").setup({
+      highlights = require("rose-pine.plugins.bufferline"),
       options = {
         mode = "tabs",
         diagnostics = "nvim_lsp",

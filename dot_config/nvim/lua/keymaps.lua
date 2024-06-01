@@ -1,7 +1,8 @@
 -- Vim Mappings (Plugin specific mappings are in the plugin specs)
 
+--- Uses vim.keymap.set function under the hood.
 ---@param mode string|table
----@param key string
+---@param key  string
 ---@param func string|function
 ---@param opts table?
 local map = function(mode, key, func, opts)
@@ -20,8 +21,9 @@ map(
 map("i", "<c-c>", "<esc>")
 
 -- Increment and decrement
-map("n", "+", "<c-a>")
-map("n", "-", "<c-x>")
+-- Disabled, instead we use dial.nvim
+-- map("n", "+", "<c-a>")
+-- map("n", "-", "<c-x>")
 
 -- better up/down
 map(

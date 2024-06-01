@@ -39,6 +39,12 @@ return {
     -- ]]
     "hrsh7th/cmp-nvim-lsp-signature-help",
     -- [[
+    -- cmp-rg
+    -- ripgrep source for nvim-cmp
+    -- https://github.com/lukas-reineke/cmp-rg
+    -- ]]
+    "lukas-reineke/cmp-rg",
+    -- [[
     -- cmp_luasnip
     -- luasnip completion source for nvim-cmp
     -- https://github.com/saadparwaiz1/cmp_luasnip

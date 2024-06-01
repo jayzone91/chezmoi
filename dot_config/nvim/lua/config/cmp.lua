@@ -70,6 +70,7 @@ cmp.setup({
     { name = "buffer" },
     { name = "nvim_lsp_signature_help" },
     { name = "luasnip" },
+    { name = "rg" },
   },
   sorting = defaults.sorting,
 })
