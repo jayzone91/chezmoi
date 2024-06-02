@@ -14,8 +14,38 @@ return {
     -- with full signature help, docs and completion
     -- for the nvim lua API.
     -- https://github.com/folke/neodev.nvim
+    -- Disable neoved, because its EOL sind 2.6.24
     -- ]]
-    "folke/neodev.nvim",
+    {
+      "folke/neodev.nvim",
+      enabled = false,
+    },
+    -- [[
+    -- lazydev.nvim
+    -- lazydev.nvim is a plugin that properly
+    -- configures LuaLS for editing your Neovim
+    -- config by lazily updating your workspace libraries.
+    -- https://github.com/folke/lazydev.nvim
+    -- ]]
+    {
+      "folke/lazydev.nvim",
+      ft = "lua", -- only load on lua files.
+      opts = {
+        library = {
+          -- Library items can be absolute paths
+          -- "~/projects/my-awesome-lib",
+          -- Or relative, which means they will be
+          -- resolved as a plugin
+          -- "LazyVim",
+          -- When relative, you can also provide a
+          -- path to the library in the plugin dir
+          "luvit-meta/library",
+        },
+      },
+      dependencies = {
+        "Bilal2453/luvit-meta", -- optional "vim.uv" typings
+      },
+    },
 
     -- [[
     -- fidget.nvim
@@ -63,7 +93,7 @@ return {
     }
   end,
   config = function(_, opts)
-    require("neodev").setup()
+    -- require("neodev").setup()
 
     vim.diagnostic.config(vim.deepcopy(opts.diagnostics))
 
