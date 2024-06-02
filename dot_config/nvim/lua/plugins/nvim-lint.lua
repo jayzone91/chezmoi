@@ -21,6 +21,7 @@ return {
       python = { "ruff" },
       markdown = { "markdownlint" },
       sql = { "sqlfluff" },
+      lua = { "luacheck" },
     }
 
     vim.api.nvim_create_autocmd({ "BufWritePost" }, {
