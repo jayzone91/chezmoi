@@ -63,15 +63,35 @@ local server = {
   emmet_ls = true,
   docker_compose_language_service = true,
   dockerls = true,
-  html = true,
+  html = {
+    filetypes = {
+      "html",
+      "templ",
+    },
+  },
   intelephense = true,
   marksman = true,
   prismals = true,
   pyright = true,
   sqls = true,
-  tailwindcss = true,
+  tailwindcss = {
+    filetypes = {
+      "html",
+      "templ",
+      "astro",
+      "typescript",
+      "javascript",
+      "react",
+    },
+    init_options = {
+      userLanguages = {
+        templ = "html",
+      },
+    },
+  },
   taplo = true,
   typos_lsp = true,
+  templ = true,
 }
 
 return server

@@ -23,6 +23,7 @@ return {
       python = { "isort", "black" },
       sql = { "sql-formatter" },
       zsh = { "beatysh" },
+      templ = { "templ" },
       -- Use the "*" filetype to run formatters on all filetypes.
       ["*"] = { "codespell" },
       -- Use the "_" filetype to run formatters on filetypes that don't

@@ -7,6 +7,7 @@ local formatters = {
   "sql-formatter", -- sql formatter
   "beautysh", -- zsh formatter
   "codespell", -- spelling
+  "templ", -- Templ Formatter
 }
 
 return formatters

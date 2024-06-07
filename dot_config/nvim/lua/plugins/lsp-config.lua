@@ -59,6 +59,11 @@ return {
     -- https://github.com/b0o/SchemaStore.nvim
     -- ]]
     "b0o/SchemaStore.nvim",
+    -- [[
+    -- templ Syntax for vim
+    -- https://github.com/joerdav/templ.vim
+    -- ]]
+    "joerdav/templ.vim",
   },
   opts = function()
     return {
@@ -159,6 +164,7 @@ return {
             client.server_capabilities[k] = v
           end
         end
+        vim.filetype.add({ extension = { templ = "templ" } })
       end,
     })
   end,
