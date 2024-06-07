@@ -7,6 +7,7 @@ local linters = {
   "ruff", -- python
   "markdownlint", -- markdown
   "sqlfluff", -- sql,
+  "luacheck", -- lua
 }
 
 return linters
