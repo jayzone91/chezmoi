@@ -25,6 +25,9 @@ local server = {
       codeLens = {
         enabled = true,
       },
+      Lua = {
+        diagnostics = { globals = { "vim" } },
+      },
       completion = {
         callSnippet = "replace",
       },
