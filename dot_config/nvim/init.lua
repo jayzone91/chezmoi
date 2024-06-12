@@ -9,6 +9,8 @@ require("options")
 require("keymaps")
 -- Import Auto Commands
 require("autocommands")
+-- Import Settings for Neovide
+require("neovide")
 
 -- Check if git is present.
 if vim.fn.executable("git") ~= 1 then
