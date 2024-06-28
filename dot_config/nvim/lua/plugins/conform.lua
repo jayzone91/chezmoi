@@ -4,6 +4,19 @@ return {
   opts = {
     formatters_by_ft = {
       lua = { "stylua" },
+      markdown = { "prettierd" },
+      html = { "prettierd" },
+      css = { "prettierd" },
+      scss = { "prettierd" },
+      javascript = { "prettierd" },
+      javascriptreact = { "prettierd" },
+      typescript = { "prettierd" },
+      typescriptreact = { "prettierd" },
+      json = { "prettierd" },
+      php = { "php-cs-fixer" },
+      python = { "isort", "black" },
+      sql = { "sql-formatter" },
+      zsh = { "beatysh" },
     },
   },
   config = function(_, opts)
