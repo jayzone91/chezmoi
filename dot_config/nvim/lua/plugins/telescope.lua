@@ -10,16 +10,6 @@ return {
   branch = "0.1.x",
   dependencies = {
     -- [[
-    -- plenary.nvim
-    -- plenary: full; complete; entire; absolute; unqualified.
-    -- All the lua functions I don't want to write twice.
-    -- https://github.com/nvim-lua/plenary.nvim
-    -- ]]
-    "nvim-lua/plenary.nvim",
-
-    -- Plugins
-
-    -- [[
     -- telescope-fzf-native.nvim
     -- FZF sorter for telescope written in c
     -- https://github.com/nvim-telescope/telescope-fzf-native.nvim

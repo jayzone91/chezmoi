@@ -10,18 +10,18 @@ return {
   event = { "BufEnter", "InsertLeave" },
   config = function()
     require("lint").linters_by_ft = {
-      css = { "stylelint" },
-      javascript = { "eslint" },
-      typescript = { "eslint" },
-      javascriptreact = { "eslint" },
-      typescriptreact = { "eslint" },
-      json = { "jsonlint" },
-      html = { "htmlhint" },
-      php = { "phpcs" },
-      python = { "ruff" },
-      markdown = { "markdownlint" },
-      sql = { "sqlfluff" },
-      lua = { "luacheck" },
+      -- css = { "stylelint" },
+      -- javascript = { "eslint" },
+      -- typescript = { "eslint" },
+      -- javascriptreact = { "eslint" },
+      -- typescriptreact = { "eslint" },
+      -- json = { "jsonlint" },
+      -- html = { "htmlhint" },
+      -- php = { "phpcs" },
+      -- python = { "ruff" },
+      -- markdown = { "markdownlint" },
+      -- sql = { "sqlfluff" },
+      -- lua = { "luacheck" },
     }
 
     vim.api.nvim_create_autocmd({ "BufWritePost" }, {

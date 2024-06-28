@@ -1,3 +1,7 @@
+-- Set leader key
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
+
 -- Vim Mappings (Plugin specific mappings are in the plugin specs)
 
 --- Uses vim.keymap.set function under the hood.
@@ -95,9 +99,6 @@ map(
   "<cmd>tabnew %<CR>",
   { desc = "Open current Buffer in new tab" }
 )
-
--- Easy way to leave terminal mode
-map("t", "<esc>", "<C-\\>>C.N>")
 
 -- Select All
 map({ "i", "n" }, "<C-a>", "<esc>gg<S-v>G")

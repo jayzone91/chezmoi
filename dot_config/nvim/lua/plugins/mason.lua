@@ -1,26 +1,7 @@
--- [[
--- mason.nvim
--- Portable package manager for Neovim that runs everywhere Neovim runs.
--- Easily install and manage LSP servers, DAP servers, linters, and formatters.
--- https://github.com/williamboman/mason.nvim
--- ]]
-
 return {
   "williamboman/mason.nvim",
-  lazy = false,
   dependencies = {
-    -- [[
-    -- mason-lspconfig.nvim
-    -- Extension to mason.nvim that makes it easier to use lspconfig with mason.nvim.
-    -- https://github.com/williamboman/mason-lspconfig.nvim
-    -- ]]
     "williamboman/mason-lspconfig.nvim",
-
-    -- [[
-    -- mason-tool-installer.nvim
-    -- Install and upgrade third party tools automatically
-    -- https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim
-    -- ]]
     "WhoIsSethDaniel/mason-tool-installer.nvim",
   },
   opts = {
@@ -37,10 +18,10 @@ return {
 
     require("mason-lspconfig").setup()
 
-    local servers = require("config.lspserver")
-    local formatters = require("config.formatters")
-    local linters = require("config.linters")
-
+    local ext = require("config.external")
+    local servers = ext.lspserver
+    local linters = ext.linter
+    local formatters = ext.formatter
     local servers_to_install = vim.tbl_filter(function(key)
       return servers[key]
     end, vim.tbl_keys(servers))

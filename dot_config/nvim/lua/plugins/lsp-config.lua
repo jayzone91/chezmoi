@@ -1,73 +1,28 @@
--- [[
--- nvim-lspconfig
--- Quickstart configs for Nvim LSP
--- https://github.com/neovim/nvim-lspconfig
--- ]]
+local servers = require("config.external").lspserver
 
 return {
   "neovim/nvim-lspconfig",
-  event = "BufEnter",
+  event = { "BufEnter", "BufNewFile" },
   dependencies = {
-    -- [[
-    -- neodev.nvim
-    -- 💻 Neovim setup for init.lua and plugin development
-    -- with full signature help, docs and completion
-    -- for the nvim lua API.
-    -- https://github.com/folke/neodev.nvim
-    -- Disable neoved, because its EOL sind 2.6.24
-    -- ]]
-    {
-      "folke/neodev.nvim",
-      enabled = false,
-    },
-    -- [[
-    -- lazydev.nvim
-    -- lazydev.nvim is a plugin that properly
-    -- configures LuaLS for editing your Neovim
-    -- config by lazily updating your workspace libraries.
-    -- https://github.com/folke/lazydev.nvim
-    -- ]]
     {
       "folke/lazydev.nvim",
-      ft = "lua", -- only load on lua files.
+      ft = "lua",
+      cmd = "LazyDev",
+      dependencies = {
+        { "Bilal2453/luvit-meta", lazy = true },
+      },
       opts = {
         library = {
-          -- Library items can be absolute paths
-          -- "~/projects/my-awesome-lib",
-          -- Or relative, which means they will be
-          -- resolved as a plugin
-          -- "LazyVim",
-          -- When relative, you can also provide a
-          -- path to the library in the plugin dir
-          "luvit-meta/library",
+          { path = "luvit-meta/library", words = { "vim%.uv" } },
+          { path = "lazy.nvim", words = { "Lazyvim" } },
         },
       },
-      dependencies = {
-        "Bilal2453/luvit-meta", -- optional "vim.uv" typings
-      },
     },
-
-    -- [[
-    -- fidget.nvim
-    -- 💫 Extensible UI for Neovim notifications and LSP progress messages.
-    -- https://github.com/j-hui/fidget.nvim
-    -- ]]
     { "j-hui/fidget.nvim", opts = {} },
-    -- [[
-    -- SchemaStore
-    -- 🛍 JSON schemas for Neovim
-    -- https://github.com/b0o/SchemaStore.nvim
-    -- ]]
     "b0o/SchemaStore.nvim",
-    -- [[
-    -- templ Syntax for vim
-    -- https://github.com/joerdav/templ.vim
-    -- ]]
-    "joerdav/templ.vim",
   },
   opts = function()
     return {
-      -- options for vim.diagnostic.config()
       diagnostics = {
         underline = true,
         update_in_insert = false,
@@ -77,33 +32,46 @@ return {
           prefix = "●",
         },
         severity_sort = true,
+        signs = {
+          text = {
+            [vim.diagnostic.severity.ERROR] = " ",
+            [vim.diagnostic.severity.WARN] = " ",
+            [vim.diagnostic.severity.HINT] = " ",
+            [vim.diagnostic.severity.INFO] = " ",
+          },
+        },
       },
       inlay_hints = {
         enabled = true,
+        exclude = { "vue" },
       },
       codelens = {
-        enabled = true,
+        enabled = false,
       },
       document_highlight = {
         enabled = true,
       },
       capabilities = {
-        workspace = {
-          fileOperations = {
-            didRename = true,
-            willRename = true,
-          },
-        },
+        formatting_options = nil,
+        timeout_ms = nil,
       },
     }
   end,
   config = function(_, opts)
-    -- require("neodev").setup()
-
     vim.diagnostic.config(vim.deepcopy(opts.diagnostics))
 
+    if vim.fn.has("nvim-0.10.0") == 0 then
+      if type(opts.diagnostics.signs) ~= "boolean" then
+        for severity, icon in pairs(opts.diagnostics.signs.text) do
+          local name =
+            vim.diagnostic.severity[severity]:lower():gsub("^%l", string.upper)
+          name = "DiagnosticSign" .. name
+          vim.fn.sign_define(name, { text = icon, texthl = name, numhl = "" })
+        end
+      end
+    end
+
     local lspconfig = require("lspconfig")
-    local servers = require("config.lspserver")
     local has_cmp, cmp = pcall(require, "cmp_nvim_lsp")
     local capabilities = vim.tbl_deep_extend(
       "force",
@@ -120,9 +88,7 @@ return {
       config = vim.tbl_deep_extend(
         "force",
         { capabilities = vim.deepcopy(capabilities) },
-        {
-          capabilities = capabilities,
-        },
+        { capabilities = capabilities },
         config
       )
 
@@ -143,13 +109,12 @@ return {
         end
 
         local has_telescope, builtin = pcall(require, "telescope.builtin")
-        if not has_telescope then
-          return
+        if has_telescope then
+          vim.keymap.set("n", "gd", builtin.lsp_definitions, { buffer = 0 })
+          vim.keymap.set("n", "gr", builtin.lsp_references, { buffer = 0 })
         end
 
         vim.opt_local_omnifunc = "v:lua.vim.lsp.omnifunc"
-        vim.keymap.set("n", "gd", builtin.lsp_definitions, { buffer = 0 })
-        vim.keymap.set("n", "gr", builtin.lsp_references, { buffer = 0 })
         vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { buffer = 0 })
         vim.keymap.set("n", "gT", vim.lsp.buf.type_definition, { buffer = 0 })
         vim.keymap.set("n", "K", vim.lsp.buf.hover, { buffer = 0 })
@@ -164,7 +129,6 @@ return {
             client.server_capabilities[k] = v
           end
         end
-        vim.filetype.add({ extension = { templ = "templ" } })
       end,
     })
   end,

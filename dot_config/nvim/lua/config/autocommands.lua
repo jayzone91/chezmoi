@@ -1,10 +1,11 @@
--- Highlight when yanking (copying) text
+-- [[ Highlight on Yank ]]
+-- See :help vim.highlight.on_yank()
 vim.api.nvim_create_autocmd("TextYankPost", {
-  desc = "Highlight when yanking text",
-  group = vim.api.nvim_create_augroup("highlight-yank", { clear = true }),
   callback = function()
     vim.highlight.on_yank()
   end,
+  group = vim.api.nvim_create_augroup("HighlightOnYank", { clear = true }),
+  desc = "Highlight when yanking text",
 })
 
 -- Resize splits if window got resized
@@ -55,4 +56,3 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.bo[event.buf].buflisted = false
   end,
 })
-

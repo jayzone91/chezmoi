@@ -1,6 +1,3 @@
-vim.g.mapleader = " "
-vim.g.maplocalleader = " "
-
 vim.o.autoindent = true -- take indent for new line from previous line
 vim.o.autoread = true -- autom. read file when changed outside of Vim
 vim.o.background = "dark" -- "dark" or "light", used for highlight colors

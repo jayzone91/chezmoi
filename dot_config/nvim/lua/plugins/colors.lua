@@ -1,9 +1,3 @@
--- [[
--- Rosé Pine for Neovim
--- Soho vibes for Neovim
--- https://github.com/rose-pine/neovim
--- ]]
-
 return {
   "rose-pine/neovim",
   name = "rose-pine",
