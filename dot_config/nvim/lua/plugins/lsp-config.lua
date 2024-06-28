@@ -1,4 +1,14 @@
 local servers = {
+  gopls = true,
+  html = {
+    filetypes = {
+      "html",
+      "templ",
+      "nunjuks",
+    },
+  },
+  tsserver = true,
+  intelephense = true,
   lua_ls = {
     settings = {
       workspace = {
@@ -25,9 +35,16 @@ local servers = {
 }
 local linter = {
   "luacheck",
+  "eslint",
+  "jsonlint",
+  "phpcs",
+  "stylelint",
+  "htmlhint",
 }
 local formatter = {
   "stylua",
+  "prettier",
+  "php-cs-fixer",
 }
 
 return {
@@ -229,7 +246,6 @@ return {
           end
         end, { "i", "s" }),
       }),
-      ---@diagnostic disable-next-line:missing-fields
       sources = {
         { name = "lazydev", group_index = 0 }, -- set group index to 0 to skip loading LuaLS completions
         { name = "nvim_lsp" },
@@ -304,7 +320,20 @@ return {
     })
 
     -- Formatter Config
-    require("conform").setup(opts)
+    require("conform").setup({
+      formatters_by_ft = {
+        lua = { "stylua" },
+        html = { "prettier" },
+        css = { "prettier" },
+        nunjucks = { "prettier" },
+        javascript = { "prettier" },
+        typescript = { "prettier" },
+        javascriptreact = { "prettier" },
+        typescriptreact = { "prettier" },
+        json = { "prettier" },
+        php = { "php-cs-fixer" },
+      },
+    })
 
     vim.api.nvim_create_autocmd("BufWritePre", {
       callback = function(args)
@@ -320,6 +349,13 @@ return {
     -- Linter Config
     require("lint").linters_by_ft = {
       lua = { "luacheck" },
+      javascript = { "eslint" },
+      typescript = { "eslint" },
+      javascriptreact = { "eslint" },
+      typescriptreact = { "eslint" },
+      html = { "htmlhint" },
+      php = { "phpcs" },
+      css = { "stylelint" },
     }
 
     vim.api.nvim_create_autocmd({ "BufWritePost" }, {
