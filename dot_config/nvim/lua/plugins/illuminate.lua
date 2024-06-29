@@ -9,21 +9,18 @@
 return {
   "RRethy/vim-illuminate",
   event = "BufEnter",
-  config = function()
-    require("illuminate").configure({
-      provider = {
+  opts = {
+    delay = 200,
+    large_file_cutoff = 2000,
+    large_file_overrides = {
+      providers = {
         "lsp",
         "treesitter",
         "regex",
       },
-      delay = 100,
-      filetype_denylist = {
-        "dirbuf",
-        "dirvish",
-        "fugitive",
-        "Neotree",
-      },
-      under_cursor = true,
-    })
+    },
+  },
+  config = function(_, opts)
+    require("illuminate").configure(opts)
   end,
 }
