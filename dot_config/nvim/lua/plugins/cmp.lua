@@ -134,7 +134,8 @@ return {
           side_padding = (cmp_style ~= "atom" and cmp_style ~= "atom_colored")
               and 1
             or 0,
-          winhighlight = "Normal:CmpPmenu,CursorLine:CmpSel,Search:None",
+          winhighlight = "Normal:CmpPmenu,CursorLine:Visual,Search:None",
+          -- winblendwinhighlight = "Normal:Normal,FloatBorder:FloatBorder,CursorLine:Visual,Search:None",
           scrollbar = false,
         },
         documentation = {
@@ -197,14 +198,13 @@ return {
           { name = "buffer" },
         },
         {
-          -- { name = "luasnip" },
+          { name = "luasnip" },
           { name = "rg" },
         },
       },
 
       sorting = defaults.sorting,
     })
-
     cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
   end,
 }

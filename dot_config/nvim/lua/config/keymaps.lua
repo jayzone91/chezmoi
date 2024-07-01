@@ -4,11 +4,11 @@ vim.g.maplocalleader = " "
 
 -- Vim Mappings (Plugin specific mappings are in the plugin specs)
 
---- Uses vim.keymap.set function under the hood.
+--- Sets Keymaps
 ---@param mode string|table
----@param key  string
+---@param key string
 ---@param func string|function
----@param opts table?
+---@param opts table|nil
 local map = function(mode, key, func, opts)
   vim.keymap.set(mode, key, func, opts or {})
 end

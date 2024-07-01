@@ -21,6 +21,14 @@ return {
         },
       },
       { "j-hui/fidget.nvim", opts = {} },
+      {
+        "ray-x/lsp_signature.nvim",
+        enabled = false,
+        opts = {},
+        config = function(_, opts)
+          require("lsp_signature").setup(opts)
+        end,
+      },
     },
     opts = function()
       return {
@@ -117,29 +125,29 @@ return {
           end
 
           vim.opt_local_omnifunc = "v:lua.vim.lsp.omnifunc"
-          local function opts(desc)
+          local function opts_keys(desc)
             return { buffer = 0, desc = "LSP: " .. desc }
           end
           vim.keymap.set(
             "n",
             "gD",
             vim.lsp.buf.declaration,
-            opts("Go to declaration")
+            opts_keys("Go to declaration")
           )
           vim.keymap.set(
             "n",
             "gT",
             vim.lsp.buf.type_definition,
-            opts("Go ro type Definition")
+            opts_keys("Go ro type Definition")
           )
           vim.keymap.set("n", "K", vim.lsp.buf.hover, { buffer = 0 })
           vim.keymap.set(
             "n",
             "ca",
             vim.lsp.buf.code_action,
-            opts("Code actions")
+            opts_keys("Code actions")
           )
-          vim.keymap.set("n", "rn", vim.lsp.buf.rename, opts("Rename"))
+          vim.keymap.set("n", "rn", vim.lsp.buf.rename, opts_keys("Rename"))
 
           if settings.server_capabilities then
             for k, v in pairs(settings.server_capabilities) do

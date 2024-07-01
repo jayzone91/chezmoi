@@ -56,3 +56,22 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.bo[event.buf].buflisted = false
   end,
 })
+
+-- show cursorline only in active window
+local function group(ext)
+  return vim.api.nvim_create_augroup("CursorLineInActiveWindow " .. ext, {})
+end
+vim.api.nvim_create_autocmd({ "InsertLeave", "WinEnter" }, {
+  group = group("show"),
+  callback = function(event)
+    if vim.bo[event.buf].buftype == "" then
+      vim.opt_local.cursorline = true
+    end
+  end,
+})
+vim.api.nvim_create_autocmd({ "InsertEnter", "WinLeave" }, {
+  group = group("hide"),
+  callback = function()
+    vim.opt_local.cursorline = false
+  end,
+})

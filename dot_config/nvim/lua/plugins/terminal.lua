@@ -1,7 +1,9 @@
 return {
   "akinsho/toggleterm.nvim",
   version = "*",
-  opts = {},
+  opts = {
+    highlights = require("rose-pine.plugins.toggleterm"),
+  },
   config = function(_, opts)
     require("toggleterm").setup(opts)
     vim.keymap.set(
