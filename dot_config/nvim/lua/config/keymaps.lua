@@ -102,3 +102,23 @@ map(
 
 -- Select All
 map({ "i", "n" }, "<C-a>", "<esc>gg<S-v>G")
+
+-- Terminal Stuff
+map("n", "<leader>ts", function()
+  vim.cmd("belowright 12split")
+  vim.cmd("set winfixheight")
+  vim.cmd("term")
+  vim.cmd("startinsert")
+end, { desc = "Split Screen and open Terminal on the lower part." })
+
+map("n", "<leader>tn", function()
+  vim.cmd("tabnew")
+  vim.cmd("terminal")
+  vim.cmd("startinsert")
+end, { desc = "Open Terminal in a new Tab" })
+
+map("n", "<leader>tv", function()
+  vim.cmd("vsplit")
+  vim.cmd("terminal")
+  vim.cmd("startinsert")
+end, { desc = "Split Screen vertical and open Terminal on the left part." })
