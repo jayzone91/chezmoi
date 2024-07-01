@@ -1,17 +1,28 @@
--- [[ Highlight on Yank ]]
--- See :help vim.highlight.on_yank()
+local function augroup(name)
+	return vim.api.nvim_create_augroup("jayvim_" .. name, {clear = true})
+end
+
+-- Check if we need to reload the file when it changed
+vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
+  group = augroup("checktime"),
+  callback = function()
+    if vim.o.buftype ~= "nofile" then
+      vim.cmd("checktime")
+    end
+  end,
+})
+
+-- Highlight on yank
 vim.api.nvim_create_autocmd("TextYankPost", {
+  group = augroup("highlight_yank"),
   callback = function()
     vim.highlight.on_yank()
   end,
-  group = vim.api.nvim_create_augroup("HighlightOnYank", { clear = true }),
-  desc = "Highlight when yanking text",
 })
 
--- Resize splits if window got resized
+-- resize splits if window got resized
 vim.api.nvim_create_autocmd({ "VimResized" }, {
-  desc = "Resize splits if window got resized",
-  group = vim.api.nvim_create_augroup("resize_splits", { clear = true }),
+  group = augroup("resize_splits"),
   callback = function()
     local current_tab = vim.fn.tabpagenr()
     vim.cmd("tabdo wincmd =")
@@ -19,10 +30,9 @@ vim.api.nvim_create_autocmd({ "VimResized" }, {
   end,
 })
 
--- Close some filetypes with <q>
+-- close some filetypes with <q>
 vim.api.nvim_create_autocmd("FileType", {
-  desc = "Close some filetypes with <q>",
-  group = vim.api.nvim_create_augroup("close_with_q", { clear = true }),
+  group = augroup("close_with_q"),
   pattern = {
     "PlenaryTestPopup",
     "help",
@@ -31,47 +41,27 @@ vim.api.nvim_create_autocmd("FileType", {
     "qf",
     "spectre_panel",
     "startuptime",
-    "tspayground",
+    "tsplayground",
     "neotest-output",
     "checkhealth",
     "neotest-summary",
     "neotest-output-panel",
+    "dbout",
+    "gitsigns.blame",
   },
   callback = function(event)
     vim.bo[event.buf].buflisted = false
-    vim.keymap.set(
-      "n",
-      "q",
-      "<cmd>close<cr>",
-      { buffer = event.buf, silent = true }
-    )
+    vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = event.buf, silent = true })
   end,
 })
 
 -- make it easier to close man-files when opened inline
 vim.api.nvim_create_autocmd("FileType", {
-  group = vim.api.nvim_create_augroup("man_unlisted", { clear = true }),
+  group = augroup("man_unlisted"),
   pattern = { "man" },
   callback = function(event)
     vim.bo[event.buf].buflisted = false
   end,
 })
 
--- show cursorline only in active window
-local function group(ext)
-  return vim.api.nvim_create_augroup("CursorLineInActiveWindow " .. ext, {})
-end
-vim.api.nvim_create_autocmd({ "InsertLeave", "WinEnter" }, {
-  group = group("show"),
-  callback = function(event)
-    if vim.bo[event.buf].buftype == "" then
-      vim.opt_local.cursorline = true
-    end
-  end,
-})
-vim.api.nvim_create_autocmd({ "InsertEnter", "WinLeave" }, {
-  group = group("hide"),
-  callback = function()
-    vim.opt_local.cursorline = false
-  end,
-})
+

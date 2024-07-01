@@ -1,17 +1,11 @@
--- Set leader key
-vim.g.mapleader = " "
-vim.g.maplocalleader = " "
+local map = JayVim.safe_keymap_set
 
--- Vim Mappings (Plugin specific mappings are in the plugin specs)
+-- better up/down
+map({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true, silent = true })
+map({ "n", "x" }, "<Down>", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true, silent = true })
+map({ "n", "x" }, "k", "v:count == 0 ? 'gk' : 'k'", { desc = "Up", expr = true, silent = true })
+map({ "n", "x" }, "<Up>", "v:count == 0 ? 'gk' : 'k'", { desc = "Up", expr = true, silent = true })
 
---- Sets Keymaps
----@param mode string|table
----@param key string
----@param func string|function
----@param opts table|nil
-local map = function(mode, key, func, opts)
-  vim.keymap.set(mode, key, func, opts or {})
-end
 
 -- save file with CTRL-S
 map(
@@ -24,10 +18,6 @@ map(
 -- Leave Insert mode with CTRL-c
 map("i", "<c-c>", "<esc>")
 
--- Increment and decrement
--- Disabled, instead we use dial.nvim
--- map("n", "+", "<c-a>")
--- map("n", "-", "<c-x>")
 
 -- better up/down
 map(
@@ -54,6 +44,7 @@ map(
   "v:count == 0 ? 'gk' : 'k'",
   { expr = true, silent = true }
 )
+
 
 -- Duplicate Lines
 map("n", "<leader><down>", "Yp", { desc = "Duplicate Line Down" })
@@ -88,6 +79,7 @@ map("n", "<leader>ss", "<C-w>s", { desc = "Split Screen horizontal" })
 map("n", "<leader>sv", "<C-w>v", { desc = "Split Screen vertical" })
 map("n", "<leader>se", "<C-w>=", { desc = "Make Split equal size" })
 
+
 -- tabs
 map("n", "<leader>to", "<cmd>tabnew<CR>", { desc = "Open new Tab" })
 map("n", "<leader>tx", "<cmd>tabclose<CR>", { desc = "Close current Tab" })
@@ -102,6 +94,7 @@ map(
 
 -- Select All
 map({ "i", "n" }, "<C-a>", "<esc>gg<S-v>G")
+
 
 -- Terminal Stuff
 map("n", "<leader>ts", function()

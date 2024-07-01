@@ -1,3 +1,18 @@
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
+
+vim.g.autoformat = true
+vim.g.jayvim_picker = "auto"
+vim.g.root_spec = { "lsp", {".git", "lua"}, "cwd"}
+vim.g.jaygit_config = true
+vim.g.jayvim_statuscolumn= {
+	folds_open = false,
+	 folds_githl = false, 
+ }
+ vim.g.deprecation_warnings = false
+ vim.g.bigfile_size = 1024 * 1024 * 1.5 -- 1.5 MB
+ vim.g.trouble_lualine = true
+
 vim.o.autoindent = true -- take indent for new line from previous line
 vim.o.autoread = true -- autom. read file when changed outside of Vim
 vim.o.background = "dark" -- "dark" or "light", used for highlight colors
@@ -120,3 +135,6 @@ vim.o.swapfile = false -- whether to use a swapfile for a buffer
 if vim.fn.has("nvim-0.10") == 1 then
   vim.o.smoothscroll = true -- scroll by screen lines when 'wrap' is set
 end
+
+-- Fix markdown indentation settings
+vim.g.markdown_recommended_style = 0
