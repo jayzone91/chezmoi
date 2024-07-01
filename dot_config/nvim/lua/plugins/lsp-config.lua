@@ -117,11 +117,29 @@ return {
           end
 
           vim.opt_local_omnifunc = "v:lua.vim.lsp.omnifunc"
-          vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { buffer = 0 })
-          vim.keymap.set("n", "gT", vim.lsp.buf.type_definition, { buffer = 0 })
+          local function opts(desc)
+            return { buffer = 0, desc = "LSP: " .. desc }
+          end
+          vim.keymap.set(
+            "n",
+            "gD",
+            vim.lsp.buf.declaration,
+            opts("Go to declaration")
+          )
+          vim.keymap.set(
+            "n",
+            "gT",
+            vim.lsp.buf.type_definition,
+            opts("Go ro type Definition")
+          )
           vim.keymap.set("n", "K", vim.lsp.buf.hover, { buffer = 0 })
-          vim.keymap.set("n", "ca", vim.lsp.buf.code_action, { buffer = 0 })
-          vim.keymap.set("n", "rn", vim.lsp.buf.rename, { buffer = 0 })
+          vim.keymap.set(
+            "n",
+            "ca",
+            vim.lsp.buf.code_action,
+            opts("Code actions")
+          )
+          vim.keymap.set("n", "rn", vim.lsp.buf.rename, opts("Rename"))
 
           if settings.server_capabilities then
             for k, v in pairs(settings.server_capabilities) do

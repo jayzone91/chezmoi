@@ -19,6 +19,94 @@ return {
     "rafamadriz/friendly-snippets",
   },
   config = function()
+    local cmp_ui = {
+      icons = true,
+      lspkind_text = true,
+      style = "atom_colored",
+    }
+    local cmp_style = cmp_ui.style
+
+    local field_arrangement = {
+      atom = { "kind", "abbr", "menu" },
+      atom_colored = { "kind", "abbr", "menu" },
+    }
+
+    local formatting_style = {
+      fields = field_arrangement[cmp_style] or { "abbr", "kind", "menu" },
+      format = function(_, item)
+        local icons = {
+          Namespace = "󰌗",
+          Text = "󰉿",
+          Method = "󰆧",
+          Function = "󰆧",
+          Constructor = "",
+          Field = "󰜢",
+          Variable = "󰀫",
+          Class = "󰠱",
+          Interface = "",
+          Module = "",
+          Property = "󰜢",
+          Unit = "󰑭",
+          Value = "󰎠",
+          Enum = "",
+          Keyword = "󰌋",
+          Snippet = "",
+          Color = "󰏘",
+          File = "󰈚",
+          Reference = "󰈇",
+          Folder = "󰉋",
+          EnumMember = "",
+          Constant = "󰏿",
+          Struct = "󰙅",
+          Event = "",
+          Operator = "󰆕",
+          TypeParameter = "󰊄",
+          Table = "",
+          Object = "󰅩",
+          Tag = "",
+          Array = "[]",
+          Boolean = "",
+          Number = "",
+          Null = "󰟢",
+          String = "󰉿",
+          Calendar = "",
+          Watch = "󰥔",
+          Package = "",
+          Copilot = "",
+          Codeium = "",
+          TabNine = "",
+        }
+        local icon = (icons and icons[item.kind]) or ""
+
+        if cmp_style == "atom" or cmp_style == "atom_colored" then
+          icon = " " .. icon .. " "
+          item.menu = cmp_ui.lspkind_text and "  (" .. item.kind .. ")" or ""
+          item.kind = icon
+        else
+          icon = cmp_ui.lspkind_text and (" " .. icon .. " ") or icon
+          item.kind = string.format(
+            "%s %s",
+            icon,
+            cmp_ui.lspkind_text and item.kind or ""
+          )
+        end
+
+        return item
+      end,
+    }
+    local function cmp_border(hl_name)
+      return {
+        { "╭", hl_name },
+        { "─", hl_name },
+        { "╮", hl_name },
+        { "│", hl_name },
+        { "╯", hl_name },
+        { "─", hl_name },
+        { "╰", hl_name },
+        { "│", hl_name },
+      }
+    end
+
     local cmp_autopairs = require("nvim-autopairs.completion.cmp")
     local lspkind = require("lspkind")
     lspkind.init()
@@ -31,18 +119,31 @@ return {
 
     cmp.setup({
       completion = {
-        completeopt = "menu,menuone,noinser",
+        completeopt = "menu,menuone,noinsert",
       },
+
       snippet = {
         -- REQUIRED
         expand = function(args)
           luasnip.lsp_expand(args.body)
         end,
       },
+
       window = {
-        completion = cmp.config.window.bordered(),
-        documentation = cmp.config.window.bordered(),
+        completion = {
+          side_padding = (cmp_style ~= "atom" and cmp_style ~= "atom_colored")
+              and 1
+            or 0,
+          winhighlight = "Normal:CmpPmenu,CursorLine:CmpSel,Search:None",
+          scrollbar = false,
+        },
+        documentation = {
+          border = cmp_border("CmpDocBorder"),
+          winhighlight = "Normal:CmpDoc",
+        },
       },
+      formatting = formatting_style,
+
       mapping = cmp.mapping.preset.insert({
         ["<C-n>"] = cmp.mapping.select_next_item({
           behavior = cmp.SelectBehavior.Insert,
@@ -86,6 +187,7 @@ return {
           end
         end, { "i", "s" }),
       }),
+
       sources = {
         { name = "lazydev", group_index = 0 }, -- set group index to 0 to skip loading LuaLS completions
         { name = "nvim_lsp" },
@@ -99,6 +201,7 @@ return {
           { name = "rg" },
         },
       },
+
       sorting = defaults.sorting,
     })
 
