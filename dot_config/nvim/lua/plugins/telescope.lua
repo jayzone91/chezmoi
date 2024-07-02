@@ -86,6 +86,7 @@ return {
     })
 
     pcall(telescope.load_extension, "fzf")
+    pcall(telescope.load_extension, "flutter")
 
     local builtin = require("telescope.builtin")
 
@@ -94,6 +95,9 @@ return {
     end
 
     map("n", "<leader>ff", builtin.find_files, "Find Files")
+    map("n", "<leader>fc", function()
+      require("telescope").extensions.flutter.commands()
+    end, "Find Flutter Commands")
     map("n", "<leader><space>", builtin.buffers, "Search open Buffers")
     map("n", "<leader>fr", builtin.oldfiles, "Find recent Files")
     map("n", "<leader>fk", builtin.keymaps, "Find Keymaps")

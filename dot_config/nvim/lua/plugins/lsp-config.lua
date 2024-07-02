@@ -29,6 +29,13 @@ return {
           require("lsp_signature").setup(opts)
         end,
       },
+      {
+        "akinsho/flutter-tools.nvim",
+        lazy = false,
+        config = function()
+          require("flutter-tools").setup({})
+        end,
+      },
     },
     opts = function()
       return {
