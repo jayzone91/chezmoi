@@ -9,6 +9,7 @@ return {
     "hrsh7th/cmp-nvim-lsp-signature-help",
     "lukas-reineke/cmp-rg",
     "saadparwaiz1/cmp_luasnip",
+    "lukas-reineke/cmp-under-comparator",
     {
       "L3MON4D3/LuaSnip",
       version = "v2.*",
@@ -118,6 +119,20 @@ return {
     local defaults = require("cmp.config.default")()
 
     cmp.setup({
+      ---@diagnostic disable-next-line: missing-fields
+      sorting = {
+        comparators = {
+          cmp.config.compare.offset,
+          cmp.config.compare.exact,
+          cmp.config.compare.score,
+          require("cmp-under-comparator").under,
+          cmp.config.compare.kind,
+          cmp.config.compare.sort_text,
+          cmp.config.compare.length,
+          cmp.config.compare.order,
+        },
+      },
+
       completion = {
         completeopt = "menu,menuone,noinsert",
       },
@@ -202,8 +217,6 @@ return {
           { name = "rg" },
         },
       },
-
-      sorting = defaults.sorting,
     })
     cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
   end,
