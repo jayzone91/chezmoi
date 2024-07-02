@@ -36,6 +36,10 @@ return {
           require("flutter-tools").setup({})
         end,
       },
+      {
+        "folke/neoconf.nvim",
+        opts = {},
+      },
     },
     opts = function()
       return {
