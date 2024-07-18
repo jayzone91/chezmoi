@@ -70,20 +70,19 @@ return {
     end
     local lspconfig = require("lspconfig")
 
-    for name, config in pairs(servers) do
-      if config == true then
-        config = {}
+    local has_mason, _ = pcall(require, "mason")
+    if has_mason then
+      for name, config in pairs(servers) do
+        if config == true then
+          config = {}
+        end
+        config = vim.tbl_deep_extend("force", {}, {
+          capabilities = capabilities,
+        }, config)
+
+        lspconfig[name].setup(config)
       end
-      config = vim.tbl_deep_extend("force", {}, {
-        capabilities = capabilities,
-      }, config)
-
-      lspconfig[name].setup(config)
     end
-
-    local disable_semantic_tokens = {
-      lua = true,
-    }
 
     vim.api.nvim_create_autocmd("LspAttach", {
       callback = function(args)
@@ -117,11 +116,6 @@ return {
           vim.lsp.buf.code_action,
           { buffer = 0 }
         )
-
-        local filetype = vim.bo[bufnr].filetype
-        if disable_semantic_tokens[filetype] then
-          client.server_capabilities.semanticTokensProvider = nil
-        end
 
         -- Override server capabilities
         if settings.server_capabilities then

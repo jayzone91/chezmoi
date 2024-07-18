@@ -44,13 +44,43 @@ return {
     integrations = {
       cmp = true,
       gitsigns = true,
-      nvimtree = true,
       treesitter = true,
       notify = false,
-      mini = {
-        enabled = true,
-        indentscope_color = "",
+      indent_blankline = {
+        enabled = false, -- TODO: Enable later
+        scope_color = "", -- catppuccin color (eg. `lavender`) Default: text
+        colored_indent_levels = false,
       },
+      mason = true,
+      neotree = true,
+      noice = false, -- TODO: Enable later
+      native_lsp = {
+        enabled = true,
+        virtual_text = {
+          errors = { "italic" },
+          hints = { "italic" },
+          warnings = { "italic" },
+          information = { "italic" },
+          ok = { "italic" },
+        },
+        underlines = {
+          errors = { "underline" },
+          hints = { "underline" },
+          warnings = { "underline" },
+          information = { "underline" },
+          ok = { "underline" },
+        },
+        inlay_hints = {
+          background = true,
+        },
+      },
+      notify = false, -- TODO: Enable later
+      telescope = {
+        enabled = true,
+        -- style = "nvchad"
+      },
+      lsp_trouble = false, -- TODO: Enable later
+      which_key = false, -- TODO: Enable later
     },
   },
   config = function(_, opts)
