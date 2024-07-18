@@ -1,7 +1,3 @@
--- Keymaps are automatically loaded on the VeryLazy event
--- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
--- Add any additional keymaps here
-
 ---@param mode string|table
 ---@param keys string
 ---@param fun string|function
@@ -68,3 +64,9 @@ map("n", "<leader>se", "<C-w>=", { desc = "Make Split equal size" })
 
 -- Select All
 map({ "i", "n" }, "<C-a>", "<esc>gg<S-v>G")
+
+-- save file
+map({ "i", "x", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "Save File" })
+
+-- quit
+map("n", "<leader>qq", "<cmd>qa<cr>", { desc = "Quit All" })
