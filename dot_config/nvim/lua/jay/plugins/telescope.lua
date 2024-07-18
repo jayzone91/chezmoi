@@ -5,10 +5,22 @@ return {
   dependencies = {
     -- Plugins
     -- https://github.com/nvim-telescope/telescope-fzf-native.nvim
+    { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
     -- https://github.com/nvim-telescope/telescope-node-modules.nvim
+    "nvim-telescope/telescope-node-modules.nvim",
     -- https://github.com/xiyaowong/telescope-emoji.nvim
+    "xiyaowong/telescope-emoji.nvim",
   },
-  opts = {},
+  opts = {
+    extensions = {
+      fzf = {
+        fuzzy = true,
+        override_generic_sorter = true,
+        override_file_sorter = true,
+        case_mode = "smart_case",
+      },
+    },
+  },
   keys = {
     {
       "<leader>ff",
@@ -31,4 +43,23 @@ return {
       { desc = "Telescope Help Tags" },
     },
   },
+  config = function(_, opts)
+    require("telescope").setup(opts)
+    pcall(require("telescope").load_extension, "fzf")
+    pcall(require("telescope").load_extension, "node_modules")
+    pcall(require("telescope").load_extension, "emoji")
+
+    vim.keymap.set(
+      "n",
+      "<leader>fn",
+      "<cmd>Telescope node_modules list<CR>",
+      { desc = "Search Node Modules" }
+    )
+    vim.keymap.set(
+      "n",
+      "<leader>fe",
+      "<cmd>Telescope emoji<CR>",
+      { desc = "Search Emoji" }
+    )
+  end,
 }
